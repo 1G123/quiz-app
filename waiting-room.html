@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waiting Room</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body data-role="player">
+    <div class="container">
+        <h1>Waiting for the host to start the quiz...</h1>
+        <p>Please wait...</p>
+    </div>
+    <script>
+        window.addEventListener('storage', function(event) {
+            if (event.key === 'quizStatus' && event.newValue === 'inProgress') {
+                window.location.href = 'quiz.html';
+            }
+        });
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>

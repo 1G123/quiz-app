@@ -1,0 +1,25 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Home</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Quiz</h1>
+        <div class="game-pin-entry">
+            <input type="text" id="gamePin" placeholder="Enter Game Pin">
+            <input type="text" id="playerName" placeholder="Enter Your Name">
+            <button onclick="joinGame()">Join</button>
+        </div>
+        <div class="host-login">
+            <input type="password" id="hostPassword" placeholder="Host Password">
+            <button onclick="loginHost()">Login as Host</button>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>

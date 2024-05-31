@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Quiz</h1>
+    </header>
+
+    <main>
+        <div class="container" id="quiz-container">
+            <h2 id="question-title"></h2>
+            <div id="answers-container"></div>
+            <button onclick="nextQuestion()">Next Question</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Quiz App. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let currentQuestionIndex = 0;
+        let questions = JSON.parse(localStorage.getItem('questions'));
+        let currentPlayer = localStorage.getItem('currentPlayer');
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                alert('Quiz finished!');
+                window.location.href = '403.html';
+                return;
+            }
+
+            let question = questions[currentQuestionIndex];
+            document.getElementById('question-title').innerText = question.question;
+            let answersContainer = document.getElementById('answers-container');
+            answersContainer.innerHTML = '';
+
+            question.answers.forEach((answer, index) => {
+                let answerElement = document.createElement('div');
+                answerElement.innerHTML = `
+                    <input type="radio" name="answer" value="${index}"> ${answer}
+                `;
+                answersContainer.appendChild(answerElement);
+            });
+        }
+
+        function nextQuestion() {
+            let selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            if (selectedAnswer) {
+                let answerIndex = parseInt(selectedAnswer.value);
+                if (answerIndex === questions[currentQuestionIndex].correctAnswer) {
+                    let players = JSON.parse(localStorage.getItem('players'));
+                    let player = players.find(p => p.name === currentPlayer);
+                    if (player) {
+                        player.score++;
+                        localStorage.setItem('players', JSON.stringify(players));
+                    }
+                }
+                currentQuestionIndex++;
+                loadQuestion();
+            } else {
+                alert('Please select an answer.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadQuestion);
+    </script>
+</body>
+</html>
